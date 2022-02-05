@@ -3,7 +3,10 @@
 import os, re, sys, requests, urllib.parse
 
 try:
-    query = urllib.parse.quote(" ".join(sys.argv[1:]))
+    if len(sys.argv) > 1:
+        query = urllib.parse.quote(" ".join(sys.argv[1:]))
+    else:
+        query = urllib.parse.quote(input("\033[38;2;100;255;100mPlease enter a search query: \033[38;2;200;255;200m"))
 
     result = requests.get(f"https://1337x.wtf/search/{query}/1/").content.decode("utf-8")
 
