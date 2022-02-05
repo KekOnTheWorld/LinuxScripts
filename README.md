@@ -22,3 +22,15 @@ chmod +x install.sh && ./install.sh
 ```
 git pull && ./install.sh
 ```
+
+## Usage
+
+<br>
+
+### KekFlix
+Used to search for torrents to stream video using peerflix and 1337x.wtf
+```
+kekflix <search query>
+```
+
+<br>
