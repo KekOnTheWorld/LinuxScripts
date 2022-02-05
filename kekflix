@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+
+import os, re, sys, requests, urllib.parse
+
+try:
+    query = urllib.parse.quote(" ".join(sys.argv[1:]))
+
+    result = requests.get(f"https://1337x.wtf/search/{query}/1/").content.decode("utf-8")
+
+    torrents = re.findall("torrent\/[0-9]{7}\/[a-zA-Z0-9?%-]*/", result)
+    torrentsl = len(torrents)
+
+    print("\n".join([f"\033[38;2;0;200;255m{i}: \033[38;2;120;255;255m{torrents[i]}" for i in range(torrentsl)]))
+
+    choice = -1
+    while choice < 0 or choice >= torrentsl:
+        kek = input(f"\033[38;2;100;255;100mPlease enter a number between 0 and {torrentsl-1}: \033[38;2;200;255;200m")
+        if kek.isnumeric():
+            choice = int(kek)
+
+    torrent = torrents[choice]
+    magnet = requests.get(f"https://1337x.wtf/{torrent}").content.decode("utf-8")
+    magnet = re.findall("magnet:\?xt=urn:btih:[a-zA-Z0-9]*", magnet)[0]
+
+    os.system(f"peerflix -l -k {magnet}")
+except:
+    print("\n\033[38;2;255;0;0mCanceled!\033[0m")
+
