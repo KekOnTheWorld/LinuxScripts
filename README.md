@@ -23,6 +23,8 @@ chmod +x install.sh && ./install.sh
 git pull && ./install.sh
 ```
 
+<br>
+
 ## Usage
 
 <br>
