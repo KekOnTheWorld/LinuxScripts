@@ -2,34 +2,48 @@
 
 import os, re, sys, requests, urllib.parse
 
-try:
-    if len(sys.argv) > 1:
-        query = urllib.parse.quote(" ".join(sys.argv[1:]))
-    else:
-        query = urllib.parse.quote(input("\033[38;2;100;255;100mPlease enter a search query: \033[38;2;200;255;200m"))
+def showPage(query, p):
+    print("\033[38;2;100;255;100mLoading results...")
 
-    result = requests.get(f"https://1337x.wtf/search/{query}/1/").content.decode("utf-8")
+    result = requests.get(f"https://1337x.wtf/search/{urllib.parse.quote(query)}/{p}/").content.decode("utf-8")
 
     torrents = re.findall("torrent\/[0-9]{7}\/[a-zA-Z0-9?%-]*/", result)
     torrentsl = len(torrents)
 
+    print(f"\033[1A\033[J\033[38;2;150;150;150m---------- Page {page} -----------\033[0m")
+
     if torrentsl == 0:
         print("\033[38;2;255;100;100mNo results found!")
-        quit()
+    else:
+        print("\n".join([f"\033[1m\033[38;2;0;200;255m{i}\033[22m: \033[38;2;120;255;255m{torrents[i]}" for i in range(torrentsl)]))
 
-    print("\n".join([f"\033[38;2;0;200;255m{i}: \033[38;2;120;255;255m{torrents[i]}" for i in range(torrentsl)]))
+    print(f"\033[38;2;150;150;150m---------- Page {page} -----------\033[0m\n\n")
 
     choice = -1
     while choice < 0 or choice >= torrentsl:
-        kek = input(f"\033[38;2;100;255;100mPlease enter a number between 0 and {torrentsl-1}: \033[38;2;200;255;200m")
+        cstr = f"\033[1m0-{torrentsl-1}\033[22m, " if torrentsl > 0 else ""
+        kek = input(f"\033[1A\033[J\033[38;2;100;255;100m{cstr}\033[1mn\033[22m (next) or \033[1mp\033[22m (previous): \033[38;2;200;255;200m")
         if kek.isnumeric():
             choice = int(kek)
+        elif kek == "n":
+            return p + 1
+        elif kek == "p":
+            return p - 1     
+
+    os.system("clear")
 
     torrent = torrents[choice]
     magnet = requests.get(f"https://1337x.wtf/{torrent}").content.decode("utf-8")
     magnet = re.findall("magnet:\?xt=urn:btih:[a-zA-Z0-9]*", magnet)[0]
 
     os.system(f"peerflix -l -k {magnet}")
-except:
-    print("\n\033[38;2;255;0;0mCanceled!\033[0m")
 
+try:
+    query = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else input("\033[38;2;100;255;100mPlease enter a search query: \033[38;2;200;255;200m")
+    page = 1
+    while page != None:
+        os.system("clear")
+        page = showPage(query, page)
+except Exception as e:
+    print(e)
+    print("\n\033[38;2;255;100;100mCanceled!\033[0m")
