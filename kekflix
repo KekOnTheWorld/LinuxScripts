@@ -10,6 +10,10 @@ try:
     torrents = re.findall("torrent\/[0-9]{7}\/[a-zA-Z0-9?%-]*/", result)
     torrentsl = len(torrents)
 
+    if torrentsl == 0:
+        print("\033[38;2;255;100;100mNo results found!")
+        quit()
+
     print("\n".join([f"\033[38;2;0;200;255m{i}: \033[38;2;120;255;255m{torrents[i]}" for i in range(torrentsl)]))
 
     choice = -1
