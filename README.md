@@ -27,8 +27,6 @@ git pull && ./install.sh
 
 ## Usage
 
-<br>
-
 ### KekFlix
 Used to search for torrents to stream video using peerflix and 1337x.wtf
 ```
