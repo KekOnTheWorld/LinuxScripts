@@ -5,8 +5,8 @@ A bunch of little linux tools made by KekOnTheWorld!
 <br>
 
 ## Requirements
-1. Python
-2. NPM and NodeJS
+1. Python 3.x
+2. NodeJS
 
 <br>
 
