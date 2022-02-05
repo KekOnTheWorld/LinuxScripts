@@ -5,13 +5,20 @@ A bunch of little linux tools made by KekOnTheWorld!
 <br>
 
 ## Requirements
-1. Python
-2. NPM and NodeJS
+1. Git
+2. Python
+3. NodeJS
 
 <br>
 
 ## Installation
 ```
-chmod +x install.sh
-./install.sh
+chmod +x install.sh && ./install.sh
+```
+
+<br>
+
+## Updating
+```
+git pull && ./install.sh
 ```
