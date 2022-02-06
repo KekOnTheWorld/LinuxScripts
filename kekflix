@@ -44,6 +44,5 @@ try:
     while page != None:
         os.system("clear")
         page = showPage(query, page)
-except Exception as e:
-    print(e)
+except:
     print("\n\033[38;2;255;100;100mCanceled!\033[0m")
